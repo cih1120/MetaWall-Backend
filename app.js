@@ -1,6 +1,7 @@
 const http = require('http')
 const dotenv = require('dotenv')
 const express = require('express')
+const IndexRouter = require('./routes/index')
 const PostRouter = require('./routes/posts')
 const resErrorDev = require('./service/resErrorDev')
 const resErrorProd = require('./service/resErrorProd')
@@ -18,6 +19,7 @@ process.on('uncaughtException', (err) => {
 require('./connections')
 
 // Routes
+app.use('/', IndexRouter)
 app.use('/posts', PostRouter)
 app.use(function (res, res, next) {
     res.statusCode(
