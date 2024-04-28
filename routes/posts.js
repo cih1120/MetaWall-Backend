@@ -3,6 +3,7 @@ const Post = require('../models/post')
 const User = require('../models/user')
 const handleError = require('../service/handleError')
 const router = express.Router()
+const handleErrorAsync = require('../service/handleErrorAsync')
 
 router.get('/', async (req, res, next) => {
     const timeSort = req.query.timeSort == 'asc' ? 'createAt' : '-createdAt'
@@ -20,17 +21,22 @@ router.get('/', async (req, res, next) => {
     })
 })
 
-router.post('/', async (req, res, next) => {
-    try {
-        if (!req.body.title) {
-            return handleError(res, '貼文標題未填寫')
-        }
-        if (req.body.tags.length == 0) {
-            return handleError(res, '貼文標籤未填寫')
-        }
-        if (!req.body.content) {
-            return handleError(res, '貼文內容未填寫')
-        }
+const checkPost = (data, next) => {
+    if (!data.title) {
+        return handleError(400, '貼文標題未填寫', next)
+    }
+    if (data.tags.length == 0) {
+        return handleError(400, '貼文標籤未填寫', next)
+    }
+    if (!data.content) {
+        return handleError(400, '貼文內容未填寫', next)
+    }
+}
+
+router.post(
+    '/',
+    handleErrorAsync(async (req, res, next) => {
+        checkPost(req.body, next)
 
         await Post.create(req.body)
             .then(() => {
@@ -44,10 +50,7 @@ router.post('/', async (req, res, next) => {
                 console.log('error ' + error)
                 return handleError(res, '新增失敗')
             })
-    } catch (error) {
-        console.log('error ' + error)
-        return handleError(res, '新增失敗')
-    }
-})
+    })
+)
 
 module.exports = router

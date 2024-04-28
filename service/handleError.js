@@ -1,8 +1,8 @@
-const handleError = (res, message) => {
-    res.status(400).json({
-        status: 'false',
-        message: message,
-    })
+const handleError = (httpStatus, errMessage, next) => {
+    const error = new Error(errMessage)
+    error.statusCode = httpStatus
+    error.isOperational = true
+    next(error)
 }
 
 module.exports = handleError
