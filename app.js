@@ -1,7 +1,6 @@
 const http = require('http')
 const dotenv = require('dotenv')
 const express = require('express')
-const bodyParser = require('body-parser')
 const PostRouter = require('./routes/posts')
 const resErrorDev = require('./service/resErrorDev')
 const resErrorProd = require('./service/resErrorProd')
@@ -17,10 +16,6 @@ process.on('uncaughtException', (err) => {
 
 // Mongo DB連線
 require('./connections')
-
-// 使用body-parser來解析urlencoded和json格式的request body
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
 
 // Routes
 app.use('/posts', PostRouter)

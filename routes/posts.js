@@ -35,6 +35,7 @@ const checkPost = (data, next) => {
 
 router.post(
     '/',
+    express.json(),
     handleErrorAsync(async (req, res, next) => {
         checkPost(req.body, next)
 
