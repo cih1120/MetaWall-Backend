@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "c64390a4-e7b1-4543-a39d-fd6195c2a2ea",
+		"name": "Node.js_Final_local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28861869"
+	},
+	"item": [
+		{
+			"name": "取得所有貼文",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
+					"protocol": "https",
+					"host": [
+						"hexschool-2024node-nodeexpress",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增單篇貼文",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"甄嬛傳當BGM\",\n    \"tags\": [\n        \"閒聊\"\n    ],\n    \"content\": \"可以再播500次\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
+					"protocol": "https",
+					"host": [
+						"hexschool-2024node-nodeexpress",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
