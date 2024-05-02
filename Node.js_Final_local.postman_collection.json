@@ -39,6 +39,77 @@
 			"response": []
 		},
 		{
+			"name": "編輯單筆貼文",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"串流媒體太多時要怎麼管理呢\",\n    \"tags\": [\n        \"閒聊\"\n    ],\n    \"content\": \"錢錢都不小心不見啦\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/662df11a7d430d9ac7ab6300",
+					"protocol": "https",
+					"host": [
+						"hexschool-2024node-nodeexpress",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts",
+						"662df11a7d430d9ac7ab6300"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除全部貼文",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
+					"protocol": "https",
+					"host": [
+						"hexschool-2024node-nodeexpress",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除單筆貼文",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/66250f47543aed05a0227081",
+					"protocol": "https",
+					"host": [
+						"hexschool-2024node-nodeexpress",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts",
+						"66250f47543aed05a0227081"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "新增單篇貼文",
 			"request": {
 				"method": "POST",
