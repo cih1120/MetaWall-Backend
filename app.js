@@ -22,13 +22,10 @@ require('./connections')
 app.use('/', IndexRouter)
 app.use('/posts', PostRouter)
 app.use(function (res, res, next) {
-    res.statusCode(
-        404,
-        json({
-            status: 'error',
-            message: '無此路由',
-        })
-    )
+    res.status(404).json({
+        status: 'error',
+        message: '無此路由',
+    })
 })
 
 // 錯誤處理
