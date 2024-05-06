@@ -7,6 +7,7 @@ const resErrorDev = require('./service/resErrorDev')
 const resErrorProd = require('./service/resErrorProd')
 dotenv.config({ path: './config.env' })
 const app = express()
+const cors = require('cors')
 
 // 紀錄uncaughtException錯誤，停掉該process
 process.on('uncaughtException', (err) => {
@@ -17,7 +18,7 @@ process.on('uncaughtException', (err) => {
 
 // Mongo DB連線
 require('./connections')
-
+app.use(cors())
 // Routes
 app.use('/', IndexRouter)
 app.use('/posts', PostRouter)
