@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const express = require('express')
 const IndexRouter = require('./routes/index')
 const PostRouter = require('./routes/posts')
+const UsersRouter = require('./routes/users')
 const resErrorDev = require('./service/resErrorDev')
 const resErrorProd = require('./service/resErrorProd')
 dotenv.config({ path: './config.env' })
@@ -22,6 +23,7 @@ app.use(cors())
 // Routes
 app.use('/', IndexRouter)
 app.use('/posts', PostRouter)
+app.use('/users', UsersRouter)
 app.use(function (res, res, next) {
     res.status(404).json({
         status: 'error',
@@ -39,6 +41,11 @@ app.use(function (err, req, res, next) {
     // production
     if (err.name === 'ValidationError') {
         err.message = '資料欄位未填寫正確，請重新輸入！'
+        err.isOperational = true
+        return resErrorProd(err, res)
+    }
+    if (err.name === 'JsonWebTokenError') {
+        err.message = 'Auth認證錯誤！'
         err.isOperational = true
         return resErrorProd(err, res)
     }

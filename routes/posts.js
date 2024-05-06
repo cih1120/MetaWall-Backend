@@ -4,6 +4,7 @@ const User = require('../models/user')
 const handleError = require('../service/handleError')
 const router = express.Router()
 const handleErrorAsync = require('../service/handleErrorAsync')
+const { isAuth } = require('../service/auth')
 
 const checkPost = (data, next) => {
     if (!data.title.trim()) {
@@ -22,6 +23,7 @@ router.get('/', async (req, res, next) => {
     const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createdAt'
     const q =
         req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {}
+    console.log(q)
     const posts = await Post.find(q)
         .populate({
             path: 'user',
@@ -37,13 +39,13 @@ router.get('/', async (req, res, next) => {
 // 新增貼文
 router.post(
     '/',
+    isAuth,
     express.json(),
     handleErrorAsync(async (req, res, next) => {
         checkPost(req.body, next)
-
-        await Post.create(req.body)
+        const post = { ...req.body, user: req.user._id.toString() }
+        await Post.create(post)
             .then(() => {
-                console.log(req.body)
                 res.status(201).json({
                     status: 'success',
                     message: '新增成功',

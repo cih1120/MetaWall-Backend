@@ -16,9 +16,9 @@ const PostSchema = new mongoose.Schema(
             required: [true, '貼文內容未填寫'],
         },
         user: {
-            type: mongoose.Schema.ObjectId,
+            type: String,
             ref: 'user',
-            default: '6623d734d8fa49fa45525e8b',
+            required: [true, '貼文作者錯誤'],
         },
         likes: {
             type: Number,
