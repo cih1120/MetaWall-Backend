@@ -5,6 +5,7 @@ const handleError = require('../service/handleError')
 const router = express.Router()
 const handleErrorAsync = require('../service/handleErrorAsync')
 const { isAuth } = require('../service/auth')
+const { ObjectId } = require('mongoose').Types
 
 const checkPost = (data, next) => {
     if (!data.title.trim()) {
@@ -61,20 +62,34 @@ router.post(
 // 編輯單筆貼文
 router.patch(
     '/:id',
+    isAuth,
     express.json(),
     handleErrorAsync(async (req, res, next) => {
         checkPost(req.body, next)
-        await Post.findOneAndUpdate({ _id: req.params.id }, req.body)
-            .then(() => {
+        const id = req.params.id
+        let post
+        await Post.findById(id)
+            .then((res) => {
+                post = res
+            })
+            .catch((error) => {
+                console.log('error ' + error)
+                return handleError(400, '查無此貼文', next)
+            })
+
+        // 比對登入ID與貼文ID是否一致
+        if (req.user._id.toString() !== post.user.toString()) {
+            return handleError(400, '使用者錯誤，無編輯權限', next)
+        }
+
+        await Post.findOneAndUpdate({ _id: req.params.id }, req.body).then(
+            () => {
                 res.status(201).json({
                     status: 'success',
                     message: '編輯成功',
                 })
-            })
-            .catch((error) => {
-                console.log('error ' + error)
-                return handleError(400, '查無此ID', next)
-            })
+            }
+        )
     })
 )
 
