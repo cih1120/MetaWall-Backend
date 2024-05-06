@@ -82,6 +82,10 @@ router.patch(
 router.delete(
     '/',
     handleErrorAsync(async (req, res, next) => {
+        console.log(req.originalUrl)
+        if (req.originalUrl !== '/posts') {
+            return handleError(400, '查無此ID', next)
+        }
         await Post.deleteMany({}).then(() => {
             res.status(200).json({
                 status: 'success',
