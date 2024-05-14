@@ -40,7 +40,7 @@ router.post(
         checkConfirmPassword(password, confirmPassword, next)
 
         // 確認密碼欄位是否足8碼
-        checkPasswordLength(password)
+        checkPasswordLength(password, next)
 
         // Email格式是否正確
         if (!validator.isEmail(email)) {
@@ -82,7 +82,7 @@ router.post(
         }
 
         // 確認密碼欄位是否足8碼
-        checkPasswordLength(password)
+        checkPasswordLength(password, next)
 
         // 確認email 是否已經註冊過
         const user = await User.findOne({ email }).select('+password')
@@ -115,7 +115,7 @@ router.post(
         checkConfirmPassword(password, confirmPassword, next)
 
         // 確認密碼欄位是否足8碼
-        checkPasswordLength(password)
+        checkPasswordLength(password, next)
 
         newPassword = await createPasswordHash(password)
         await User.findByIdAndUpdate(req.user.id, {
@@ -138,7 +138,15 @@ router.get(
         const user = req.user
         res.status(200).json({
             status: 'success',
-            user,
+            data: {
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    createdAt: user.createdAt,
+                    avatar: user.avatar,
+                },
+            },
         })
     })
 )
