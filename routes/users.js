@@ -36,6 +36,10 @@ router.post(
             return next(handleError(400, '欄位未填寫正確！', next))
         }
 
+        if (name.length < 2) {
+            return next(handleError(400, '暱稱需要2個字元以上', next))
+        }
+
         // 確認密碼欄位是否一致
         checkConfirmPassword(password, confirmPassword, next)
 
