@@ -126,6 +126,7 @@ const getUserProfile = handleErrorAsync(async (req, res, next) => {
                 email: user.email,
                 createdAt: user.createdAt,
                 avatar: user.avatar,
+                gender: user.gender,
             },
         },
     })
