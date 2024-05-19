@@ -179,7 +179,7 @@ const follow = handleErrorAsync(async (req, res, next) => {
         $addToSet: { following: { user: followerId } },
     })
     await User.findByIdAndUpdate(followerId, {
-        $addToSet: { follower: { userId } },
+        $addToSet: { follower: { user: userId } },
     })
 
     res.status(200).json({
@@ -205,7 +205,7 @@ const unFollow = handleErrorAsync(async (req, res, next) => {
         $pull: { following: { user: followerId } },
     })
     await User.findByIdAndUpdate(followerId, {
-        $pull: { follower: { userId } },
+        $pull: { follower: { user: userId } },
     })
 
     res.status(200).json({
