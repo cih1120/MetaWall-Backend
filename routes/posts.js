@@ -3,7 +3,7 @@ const Post = require('../models/post')
 const User = require('../models/user')
 const handleError = require('../service/handleError')
 const router = express.Router()
-const handleErrorAsync = require('../service/handleErrorAsync')
+const handleErrorAsync = require('../middlewares/handleErrorAsync')
 const { isAuth } = require('../service/auth')
 const { ObjectId } = require('mongoose').Types
 

@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const handleError = require('../service/handleError')
-const handleErrorAsync = require('../service/handleErrorAsync')
+const handleErrorAsync = require('../middlewares/handleErrorAsync')
 const sizeOf = require('image-size')
-const uploadImage = require('../service/uploadImage')
+const uploadImage = require('../middlewares/uploadImage')
 
 const { v4: uuidv4 } = require('uuid')
 const firebaseAdmin = require('../service/firebase')

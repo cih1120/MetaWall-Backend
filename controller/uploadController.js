@@ -2,7 +2,7 @@ const sizeOf = require('image-size')
 const { v4: uuidv4 } = require('uuid')
 const User = require('../models/user')
 const handleError = require('../service/handleError')
-const handleErrorAsync = require('../service/handleErrorAsync')
+const handleErrorAsync = require('../middlewares/handleErrorAsync')
 const { generateSendJWT } = require('../service/auth')
 
 const firebaseAdmin = require('../service/firebase')
