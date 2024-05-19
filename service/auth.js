@@ -43,7 +43,7 @@ const generateSendJWT = (user, statusCode, res) => {
         data: {
             user: {
                 token,
-                name: user.name,
+                ...user._doc,
             },
         },
     })

@@ -5,7 +5,9 @@ const User = require('../models/user')
 const handleError = require('../service/handleError')
 const router = express.Router()
 const handleErrorAsync = require('../service/handleErrorAsync')
+const uploadImage = require('../service/uploadImage')
 const { isAuth, generateSendJWT } = require('../service/auth')
+const { uploadAvatar } = require('../controller/uploadController')
 
 const checkPasswordLength = (password, next) => {
     if (!validator.isLength(password, { min: 8 })) {
@@ -161,13 +163,22 @@ router.patch(
     isAuth,
     express.json(),
     handleErrorAsync(async (req, res, next) => {
-        const { name } = req.body
-        console.log(name)
-        if (!name) {
-            return next(handleError(400, '請填寫修改姓名', next))
+        const { name, avatar, gender } = req.body
+        if (name && name.length <= 2) {
+            return next(handleError(400, '暱稱不得小於2個字', next))
         }
-        await User.findByIdAndUpdate(req.user.id, {
+
+        const updateFields = {
             name,
+            gender,
+        }
+
+        if (avatar) {
+            updateFields.avatar = avatar
+        }
+
+        await User.findByIdAndUpdate(req.user.id, {
+            ...updateFields,
         })
             .then((user) => generateSendJWT(user, 200, res))
             .catch((err) => {
@@ -175,5 +186,8 @@ router.patch(
             })
     })
 )
+
+// 上傳用戶大頭貼
+router.post('/profile/avatar', isAuth, uploadImage, uploadAvatar)
 
 module.exports = router

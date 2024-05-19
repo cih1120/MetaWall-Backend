@@ -4,6 +4,7 @@ const express = require('express')
 const IndexRouter = require('./routes/index')
 const PostRouter = require('./routes/posts')
 const UsersRouter = require('./routes/users')
+const UploadRouter = require('./routes/upload')
 const resErrorDev = require('./service/resErrorDev')
 const resErrorProd = require('./service/resErrorProd')
 dotenv.config({ path: './config.env' })
@@ -24,6 +25,7 @@ app.use(cors())
 app.use('/', IndexRouter)
 app.use('/posts', PostRouter)
 app.use('/users', UsersRouter)
+app.use('/upload', UploadRouter)
 app.use(function (res, res, next) {
     res.status(404).json({
         status: 'error',
