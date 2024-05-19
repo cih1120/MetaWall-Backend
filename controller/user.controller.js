@@ -1,36 +1,17 @@
 const express = require('express')
-const bcrypt = require('bcryptjs')
-const validator = require('validator')
 const User = require('../models/user')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
 const handleError = require('../service/handleError')
 const handleErrorAsync = require('../middlewares/handleErrorAsync')
 const { isAuth, generateSendJWT } = require('../service/auth')
-
-const checkNameLength = (name, next) => {
-    if (!validator.isLength(name, { min: 2 })) {
-        return next(handleError(400, '暱稱需要2個字元以上', next))
-    }
-}
-
-const checkGender = (gender, next) => {
-    if (gender !== 'female' && gender !== 'male') {
-        return next(handleError(400, '性別填寫錯誤', next))
-    }
-}
-
-const checkPasswordLength = (password, next) => {
-    if (!validator.isLength(password, { min: 8 })) {
-        return next(handleError(400, '密碼不足8碼！', next))
-    }
-}
-const checkConfirmPassword = (password, confirmPassword, next) => {
-    if (password !== confirmPassword) {
-        return next(handleError(400, '密碼不一致！', next))
-    }
-}
-const createPasswordHash = async (password) => {
-    return await bcrypt.hash(password, 12)
-}
+const {
+    checkNameLength,
+    checkGender,
+    checkPasswordLength,
+    checkConfirmPassword,
+    createPasswordHash,
+} = require('../validation/user')
 
 // 註冊會員
 const signUp = handleErrorAsync(async (req, res, next) => {
@@ -178,10 +159,66 @@ const updateProfile = handleErrorAsync(async (req, res, next) => {
         })
 })
 
+// 追蹤用戶
+const follow = handleErrorAsync(async (req, res, next) => {
+    const followerId = req.params.id
+    const userId = req.user.id
+    if (followerId === userId) {
+        return next(handleError(401, '您無法追蹤自己', next))
+    }
+
+    const follower = await User.findById(followerId)
+    if (!follower) {
+        return next(handleError(400, 'follower id 錯誤', next))
+    }
+
+    console.log(follower)
+
+    await User.findByIdAndUpdate(userId, {
+        $addToSet: { following: { user: followerId } },
+    })
+    await User.findByIdAndUpdate(followerId, {
+        $addToSet: { follower: { userId } },
+    })
+
+    res.status(200).json({
+        status: 'success',
+        message: '追蹤成功',
+    })
+})
+
+// 取消追蹤用戶
+const unFollow = handleErrorAsync(async (req, res, next) => {
+    const followerId = req.params.id
+    const userId = req.user.id
+    if (followerId === userId) {
+        return next(handleError(401, '您無法取消追蹤自己', next))
+    }
+
+    const follower = await User.findById(followerId)
+    if (!follower) {
+        return next(handleError(400, 'follower id 錯誤', next))
+    }
+
+    await User.findByIdAndUpdate(userId, {
+        $pull: { following: { user: followerId } },
+    })
+    await User.findByIdAndUpdate(followerId, {
+        $pull: { follower: { userId } },
+    })
+
+    res.status(200).json({
+        status: 'success',
+        message: '取消追蹤成功',
+    })
+})
+
 module.exports = {
     signUp,
     signIn,
     updatePassword,
     getUserProfile,
     updateProfile,
+    follow,
+    unFollow,
 }

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const { Schema } = mongoose
 const UserSchema = new mongoose.Schema(
     {
         name: {
@@ -23,14 +23,30 @@ const UserSchema = new mongoose.Schema(
             type: Date,
             default: new Date(),
         },
-        followers: {
-            type: Array,
-            default: [],
-        },
-        following: {
-            type: Array,
-            default: [],
-        },
+        followers: [
+            {
+                user: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'User',
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now(),
+                },
+            },
+        ],
+        following: [
+            {
+                user: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'User',
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now(),
+                },
+            },
+        ],
         gender: {
             type: String,
             required: [true, '請輸入您的性別'],

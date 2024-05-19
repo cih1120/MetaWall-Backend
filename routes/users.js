@@ -12,6 +12,8 @@ const {
     updatePassword,
     getUserProfile,
     updateProfile,
+    follow,
+    unFollow,
 } = require('../controller/user.controller')
 
 // 註冊會員
@@ -31,5 +33,11 @@ router.patch('/profile', isAuth, express.json(), updateProfile)
 
 // 上傳用戶大頭貼
 router.post('/profile/avatar', isAuth, uploadImage, uploadAvatar)
+
+// 追蹤用戶
+router.post('/:id/follow', isAuth, follow)
+
+// 取消追蹤用戶
+router.delete('/:id/un_follow', isAuth, unFollow)
 
 module.exports = router
