@@ -9,6 +9,8 @@ const {
     editPost,
     deleteAllPost,
     deleteSpecifyPost,
+    like,
+    unLike,
 } = require('../controller/post.controller')
 
 // 取得所有貼文
@@ -28,5 +30,11 @@ router.delete('/:id', deleteSpecifyPost)
 
 // 上傳圖片
 router.post('/photo', isAuth, uploadImage, uploadPostPhoto)
+
+// 新增一則貼文的讚
+router.post('/:id/like', isAuth, like)
+
+// 取消一則貼文的讚
+router.delete('/:id/un_like', isAuth, unLike)
 
 module.exports = router

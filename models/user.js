@@ -52,6 +52,18 @@ const UserSchema = new mongoose.Schema(
             required: [true, '請輸入您的性別'],
             enum: ['female', 'male'],
         },
+        likes: [
+            {
+                posts: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Post',
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now(),
+                },
+            },
+        ],
     },
     {
         versionKey: false,

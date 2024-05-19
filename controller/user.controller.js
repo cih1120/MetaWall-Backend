@@ -173,14 +173,25 @@ const follow = handleErrorAsync(async (req, res, next) => {
         return next(handleError(400, 'follower id 錯誤', next))
     }
 
-    console.log(follower)
-
-    await User.findByIdAndUpdate(userId, {
-        $addToSet: { following: { user: followerId } },
-    })
-    await User.findByIdAndUpdate(followerId, {
-        $addToSet: { follower: { user: userId } },
-    })
+    // 避免出現重複值，所以使用updateOne
+    await User.updateOne(
+        {
+            _id: userId,
+            'following.user': { $ne: followerId },
+        },
+        {
+            $addToSet: { following: { user: followerId } },
+        }
+    )
+    await User.updateOne(
+        {
+            _id: followerId,
+            'follower.user': { $ne: userId },
+        },
+        {
+            $addToSet: { follower: { user: userId } },
+        }
+    )
 
     res.status(200).json({
         status: 'success',

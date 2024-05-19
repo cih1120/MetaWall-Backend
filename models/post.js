@@ -20,10 +20,18 @@ const PostSchema = new mongoose.Schema(
             ref: 'user',
             required: [true, '貼文作者錯誤'],
         },
-        likes: {
-            type: Number,
-            default: 0,
-        },
+        likes: [
+            {
+                user: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'User',
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now(),
+                },
+            },
+        ],
         photo: {
             type: String,
         },

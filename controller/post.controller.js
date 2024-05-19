@@ -93,7 +93,6 @@ const deleteAllPost = handleErrorAsync(async (req, res, next) => {
 
 // 刪除單篇貼文
 const deleteSpecifyPost = handleErrorAsync(async (req, res, next) => {
-    console.log(req.params.id)
     await Post.deleteOne({ _id: req.params.id })
         .then(() => {
             res.status(200).json({
@@ -107,10 +106,69 @@ const deleteSpecifyPost = handleErrorAsync(async (req, res, next) => {
         })
 })
 
+// 新增一則貼文的讚
+const like = handleErrorAsync(async (req, res, next) => {
+    const postId = req.params.id
+    const userId = req.user.id
+    const post = await Post.findById(postId)
+    if (!post) {
+        return next(handleError(401, 'post id 錯誤', next))
+    }
+
+    // 避免出現重複值，所以使用updateOne
+    await Post.updateOne(
+        {
+            _id: postId,
+            'likes.user': { $ne: userId },
+        },
+        {
+            $addToSet: { likes: { user: userId } },
+        }
+    )
+    await User.updateOne(
+        {
+            _id: userId,
+            'likes.post': { $ne: postId },
+        },
+        {
+            $addToSet: { likes: { post: postId } },
+        }
+    )
+
+    res.status(200).json({
+        status: 'success',
+        message: '按讚成功',
+    })
+})
+
+// 取消一則貼文的讚
+const unLike = handleErrorAsync(async (req, res, next) => {
+    const postId = req.params.id
+    const userId = req.user.id
+    const post = await Post.findById(postId)
+    if (!post) {
+        return next(handleError(401, 'post id 錯誤', next))
+    }
+
+    await Post.findByIdAndUpdate(postId, {
+        $pull: { likes: { user: userId } },
+    })
+    await User.findByIdAndUpdate(userId, {
+        $pull: { likes: { post: postId } },
+    })
+
+    res.status(200).json({
+        status: 'success',
+        message: '取消按讚成功',
+    })
+})
+
 module.exports = {
     getPost,
     newPost,
     editPost,
     deleteAllPost,
     deleteSpecifyPost,
+    like,
+    unLike,
 }
