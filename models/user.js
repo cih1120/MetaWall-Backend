@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema(
         name: {
             type: String,
             require: [true, '請輸入您的名字'],
+            minlength: [2, '名字需要至少兩個字元'],
         },
         email: {
             type: String,
@@ -21,6 +22,19 @@ const UserSchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: new Date(),
+        },
+        followers: {
+            type: Array,
+            default: [],
+        },
+        following: {
+            type: Array,
+            default: [],
+        },
+        gender: {
+            type: String,
+            required: [true, '請輸入您的性別'],
+            enum: ['female', 'male'],
         },
     },
     {

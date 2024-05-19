@@ -6,6 +6,18 @@ const handleError = require('../service/handleError')
 const handleErrorAsync = require('../middlewares/handleErrorAsync')
 const { isAuth, generateSendJWT } = require('../service/auth')
 
+const checkNameLength = (name, next) => {
+    if (!validator.isLength(name, { min: 2 })) {
+        return next(handleError(400, '暱稱需要2個字元以上', next))
+    }
+}
+
+const checkGender = (gender, next) => {
+    if (gender !== 'female' && gender !== 'male') {
+        return next(handleError(400, '性別填寫錯誤', next))
+    }
+}
+
 const checkPasswordLength = (password, next) => {
     if (!validator.isLength(password, { min: 8 })) {
         return next(handleError(400, '密碼不足8碼！', next))
@@ -22,16 +34,18 @@ const createPasswordHash = async (password) => {
 
 // 註冊會員
 const signUp = handleErrorAsync(async (req, res, next) => {
-    let { email, password, confirmPassword, name } = req.body
+    let { email, password, confirmPassword, name, gender } = req.body
 
     // 確認欄位是否都有填寫
-    if (!email || !password || !confirmPassword || !name.trim()) {
+    if (!email || !password || !confirmPassword || !name.trim() || !gender) {
         return next(handleError(400, '欄位未填寫正確！', next))
     }
 
-    if (name.length < 2) {
-        return next(handleError(400, '暱稱需要2個字元以上', next))
-    }
+    // 確認性別是否填寫正確
+    checkGender(gender, next)
+
+    // 確認暱稱長度
+    checkNameLength(name, next)
 
     // 確認密碼欄位是否一致
     checkConfirmPassword(password, confirmPassword, next)
@@ -56,6 +70,7 @@ const signUp = handleErrorAsync(async (req, res, next) => {
         email,
         password,
         name,
+        gender,
     })
     generateSendJWT(newUser, 201, res)
 })
@@ -138,9 +153,12 @@ const getUserProfile = handleErrorAsync(async (req, res, next) => {
 // 更新個人資料
 const updateProfile = handleErrorAsync(async (req, res, next) => {
     const { name, avatar, gender } = req.body
-    if (name && name.length <= 2) {
-        return next(handleError(400, '暱稱不得小於2個字', next))
-    }
+
+    // 確認性別是否填寫正確
+    checkGender(gender, next)
+
+    // 確認暱稱長度
+    checkNameLength(name, next)
 
     const updateFields = {
         name,
