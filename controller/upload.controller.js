@@ -8,15 +8,17 @@ const { generateSendJWT } = require('../service/auth')
 const firebaseAdmin = require('../service/firebase')
 const bucket = firebaseAdmin.storage().bucket()
 
-const uploadAvatar = handleErrorAsync(async (req, res, next) => {
+const uploadImage = (req, res, next, checkDimensions) => {
     if (!req.files.length) {
         return next(handleError(400, '尚未上傳檔案', next))
     }
     const file = req.files[0]
 
-    const dimensions = sizeOf(file.buffer)
-    if (dimensions.width !== dimensions.height) {
-        return next(handleError(400, '圖片長寬不符合 1:1 尺寸', next))
+    if (checkDimensions) {
+        const dimensions = sizeOf(file.buffer)
+        if (dimensions.width !== dimensions.height) {
+            return next(handleError(400, '圖片長寬不符合 1:1 尺寸', next))
+        }
     }
 
     // 基於上傳檔案名稱，建立一個blob物件
@@ -33,7 +35,12 @@ const uploadAvatar = handleErrorAsync(async (req, res, next) => {
         }
         // 取得檔案的網址
         blob.getSignedUrl(config, async (err, fileUrl) => {
-            fileUrl
+            res.status(200).json({
+                status: 'success',
+                data: {
+                    fileUrl,
+                },
+            })
         })
     })
 
@@ -43,8 +50,17 @@ const uploadAvatar = handleErrorAsync(async (req, res, next) => {
 
     // 將檔案的 buffer 寫入 blobStream
     blobStream.end(file.buffer)
-})
+}
+
+const uploadAvatar = handleErrorAsync(async (req, res, next) =>
+    uploadImage(req, res, next, true)
+)
+
+const uploadPostPhoto = handleErrorAsync(async (req, res, next) =>
+    uploadImage(req, res, next, false)
+)
 
 module.exports = {
     uploadAvatar,
+    uploadPostPhoto,
 }
