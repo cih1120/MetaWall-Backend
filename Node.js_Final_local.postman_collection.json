@@ -1,313 +1,582 @@
 {
 	"info": {
-		"_postman_id": "c64390a4-e7b1-4543-a39d-fd6195c2a2ea",
-		"name": "Node.js_Final_local",
+		"_postman_id": "4044002b-59ba-4c96-aa00-6b77617dbace",
+		"name": "Node.js_Final_local Production",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28861869"
 	},
 	"item": [
 		{
-			"name": "取得所有貼文",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Post 動態貼文",
+			"item": [
+				{
+					"name": "取得所有貼文",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "編輯單筆貼文",
-			"request": {
-				"method": "PATCH",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgyOTY5OCwiZXhwIjoxNzE1MDg4ODk4fQ.gJJ4mH5qFqQUgnMR-JVdWGy5m2fXWS0hNIKDuqcBFTE",
-						"uuid": "81ec6ff3-839b-46a5-b02e-f242a963145d"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"title\": \"串流媒體太多時要怎麼管理呢\",\n    \"tags\": [\n        \"閒聊\"\n    ],\n    \"content\": \"錢錢都不小心不見啦\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "新增單篇貼文",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgzNjM5MywiZXhwIjoxNzE1MDk1NTkzfQ.NaNLLejqjw8UfYoeOnSg3X_3_XzzKtDlXibylIHH2a8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"甄嬛傳當BGM3\",\n    \"tags\": [\n        \"閒聊\"\n    ],\n    \"content\": \"可以再播500次\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/662df11a7d430d9ac7ab6300",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"posts",
-						"662df11a7d430d9ac7ab6300"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "刪除全部貼文",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "刪除單筆貼文",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/66250f47543aed05a0227081",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"posts",
-						"66250f47543aed05a0227081"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "新增單篇貼文",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgzNjM5MywiZXhwIjoxNzE1MDk1NTkzfQ.NaNLLejqjw8UfYoeOnSg3X_3_XzzKtDlXibylIHH2a8",
-						"uuid": "9c83690d-c015-4fdd-b7f4-b8ddb14757f2"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"title\": \"甄嬛傳當BGM\",\n    \"tags\": [\n        \"閒聊\"\n    ],\n    \"content\": \"可以再播500次\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "編輯單筆貼文",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgzNjM5MywiZXhwIjoxNzE1MDk1NTkzfQ.NaNLLejqjw8UfYoeOnSg3X_3_XzzKtDlXibylIHH2a8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"串流媒體太多時要怎麼管理呢\",\n    \"tags\": [\n        \"閒聊\"\n    ],\n    \"content\": \"錢錢都不小心不見啦\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/662df11a7d430d9ac7ab6300",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"662df11a7d430d9ac7ab6300"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "註冊會員",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"nana@fff.com\",\n    \"password\": \"00000000\",\n    \"confirmPassword\": \"00000000\",\n    \"name\": \"nana\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "刪除全部貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/sign_up",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"users",
-						"sign_up"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "登入會員",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"nana2@mail.com\",\n    \"password\": \"00000000\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "刪除單筆貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/66250f47543aed05a0227081",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"66250f47543aed05a0227081"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/sign_in",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"users",
-						"sign_in"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "更新密碼",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYyMDE5MDZjODUzN2FhNjNlNWEwZCIsImlhdCI6MTcxNDgyNzcxMiwiZXhwIjoxNzE1MDg2OTEyfQ.iU5XCQKKUy9BwUvDfDByqLR-UPxnDy82B1Rrocej3PM",
-						"uuid": "7eef000c-80fa-4909-8201-0e8bda823f72"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"password\": \"1234567890\",\n    \"confirmPassword\": \"1234567890\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "上傳貼文圖片",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgzNjM5MywiZXhwIjoxNzE1MDk1NTkzfQ.NaNLLejqjw8UfYoeOnSg3X_3_XzzKtDlXibylIHH2a8"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "/Users/wunianci/Downloads/brand_logo_4d77fbbdeb6a02902856fcb4ba21c583.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/photo",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"photo"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/update_password",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"users",
-						"update_password"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "取得個人資料",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgyOTY5OCwiZXhwIjoxNzE1MDg4ODk4fQ.gJJ4mH5qFqQUgnMR-JVdWGy5m2fXWS0hNIKDuqcBFTE",
-						"uuid": "4532d71b-64c5-4cc4-b8a9-1815e2877592"
-					}
-				],
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/profile",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"users",
-						"profile"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "修改個人資料",
-			"request": {
-				"method": "PATCH",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgyOTY5OCwiZXhwIjoxNzE1MDg4ODk4fQ.gJJ4mH5qFqQUgnMR-JVdWGy5m2fXWS0hNIKDuqcBFTE",
-						"uuid": "4b3e2631-9061-4cf2-9830-599c19e9d3df"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"nana3\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "新增一則貼文的留言",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjIxMDgzMiwiZXhwIjoxNzE2NDcwMDMyfQ.u_a9k2HxBa7XOPCxVIqC0zBV66Ab6YJvUxeXIfRT5T8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\": \"太讚了拔！\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/6649bd253ff7cb8676597182/comment",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"6649bd253ff7cb8676597182",
+								"comment"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/profile",
-					"protocol": "https",
-					"host": [
-						"hexschool-2024node-nodeexpress",
-						"onrender",
-						"com"
-					],
-					"path": [
-						"users",
-						"profile"
-					]
+				{
+					"name": "取得個人所有貼文",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjIxMDgzMiwiZXhwIjoxNzE2NDcwMDMyfQ.u_a9k2HxBa7XOPCxVIqC0zBV66Ab6YJvUxeXIfRT5T8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\": \"太讚了拔！\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/user/6636516258bb03b47670f107",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"user",
+								"6636516258bb03b47670f107"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"description": "操作貼文相關API"
+		},
+		{
+			"name": "Auth 會員功能",
+			"item": [
+				{
+					"name": "登入會員",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nana2@mail.com\",\n    \"password\": \"00000000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/sign_in",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新密碼",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYyMDE5MDZjODUzN2FhNjNlNWEwZCIsImlhdCI6MTcxNDgyNzcxMiwiZXhwIjoxNzE1MDg2OTEyfQ.iU5XCQKKUy9BwUvDfDByqLR-UPxnDy82B1Rrocej3PM"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"1234567890\",\n    \"confirmPassword\": \"1234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/update_password",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"update_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人資料",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgyOTY5OCwiZXhwIjoxNzE1MDg4ODk4fQ.gJJ4mH5qFqQUgnMR-JVdWGy5m2fXWS0hNIKDuqcBFTE"
+							}
+						],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/profile",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改個人資料",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNDgyOTY5OCwiZXhwIjoxNzE1MDg4ODk4fQ.gJJ4mH5qFqQUgnMR-JVdWGy5m2fXWS0hNIKDuqcBFTE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"nana3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/profile",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "註冊會員",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nana6@fff.com\",\n    \"password\": \"00000000\",\n    \"confirmPassword\": \"00000000\",\n    \"name\": \"nana\",\n    \"gender\": \"femal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/sign_up",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"sign_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "上傳大頭貼",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjA0ODExOCwiZXhwIjoxNzE2MzA3MzE4fQ.OOMLiMdoK318BDqez9fXiJTr3Q2ZcIMGl8QGCCm6y54"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "/Users/wunianci/Desktop/目標圖片.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/profile/avatar",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"profile",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "註冊、登入、修改使用者資料"
+		},
+		{
+			"name": "User 會員按讚追蹤動態",
+			"item": [
+				{
+					"name": "追蹤用戶",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjEyMTQ1MSwiZXhwIjoxNzE2MzgwNjUxfQ.e_PaAcUmmOuoG8x-z1XY0Sxh3siNTEE1hx9R9oYzI9g"
+							}
+						],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/6649b05dc7cc0ecfd676c970/follow",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"6649b05dc7cc0ecfd676c970",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增一則貼文的讚",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjEyMTQ1MSwiZXhwIjoxNzE2MzgwNjUxfQ.e_PaAcUmmOuoG8x-z1XY0Sxh3siNTEE1hx9R9oYzI9g"
+							}
+						],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/6623d734d8fa49fa45525e8b/like",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"6623d734d8fa49fa45525e8b",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消一則貼文的讚",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjEyMTQ1MSwiZXhwIjoxNzE2MzgwNjUxfQ.e_PaAcUmmOuoG8x-z1XY0Sxh3siNTEE1hx9R9oYzI9g"
+							}
+						],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/posts/6623d734d8fa49fa45525e8b/un_like",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"posts",
+								"6623d734d8fa49fa45525e8b",
+								"un_like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤用戶",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzYzOTgyZTk1NzgxMzJkNTFjOWZkNCIsImlhdCI6MTcxNjEyMTQ1MSwiZXhwIjoxNzE2MzgwNjUxfQ.e_PaAcUmmOuoG8x-z1XY0Sxh3siNTEE1hx9R9oYzI9g"
+							}
+						],
+						"url": {
+							"raw": "https://hexschool-2024node-nodeexpress.onrender.com/users/6649cbeabfc160a9bac97d66/un_follow",
+							"protocol": "https",
+							"host": [
+								"hexschool-2024node-nodeexpress",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"users",
+								"6649cbeabfc160a9bac97d66",
+								"un_follow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
