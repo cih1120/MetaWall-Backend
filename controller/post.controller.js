@@ -1,5 +1,6 @@
 const Post = require('../models/post')
 const User = require('../models/user')
+const Comment = require('../models/comments')
 const handleError = require('../service/handleError')
 const handleErrorAsync = require('../middlewares/handleErrorAsync')
 
@@ -20,13 +21,29 @@ const getPost = async (req, res, next) => {
     const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createdAt'
     const q =
         req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {}
-    console.log(q)
     const posts = await Post.find(q)
         .populate({
             path: 'user',
             select: 'name avatar ',
         })
+        .populate({
+            path: 'comments',
+            select: 'comment user createdAt',
+        })
         .sort(timeSort)
+    res.status(200).json({
+        status: 'success',
+        data: posts,
+    })
+}
+
+// 取得所有貼文
+const getUserPost = async (req, res, next) => {
+    const userId = req.params.id
+    const posts = await Post.find({ user: userId }).populate({
+        path: 'comments',
+        select: 'comment user createdAt',
+    })
     res.status(200).json({
         status: 'success',
         data: posts,
@@ -79,7 +96,6 @@ const editPost = handleErrorAsync(async (req, res, next) => {
 
 // 刪除全部貼文
 const deleteAllPost = handleErrorAsync(async (req, res, next) => {
-    console.log(req.originalUrl)
     if (req.originalUrl !== '/posts') {
         return handleError(400, '查無此ID', next)
     }
@@ -163,12 +179,39 @@ const unLike = handleErrorAsync(async (req, res, next) => {
     })
 })
 
+// 對一則貼文進行留言
+const comment = handleErrorAsync(async (req, res, next) => {
+    const postId = req.params.id
+    const userId = req.user.id
+    const { comment } = req.body
+    if (!comment.trim()) {
+        return next(handleError(400, '留言尚未填寫', next))
+    }
+    const post = await Post.findById(postId)
+    if (!post) {
+        return next(handleError(400, 'post id 錯誤', next))
+    }
+
+    const newComment = await Comment.create({
+        comment,
+        user: userId,
+        post: postId,
+    })
+
+    res.status(200).json({
+        status: 'success',
+        data: newComment,
+    })
+})
+
 module.exports = {
     getPost,
+    getUserPost,
     newPost,
     editPost,
     deleteAllPost,
     deleteSpecifyPost,
     like,
     unLike,
+    comment,
 }
