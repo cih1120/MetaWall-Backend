@@ -76,13 +76,13 @@ const signIn = handleErrorAsync(async (req, res, next) => {
     // 確認email 是否已經註冊過
     const user = await User.findOne({ email }).select('+password')
     if (!user) {
-        return next(handleError(400, '找不到使用者', next))
+        return next(handleError(406, '找不到使用者', next))
     }
 
     // 確認密碼是否正確
     const auth = await bcrypt.compare(password, user.password)
     if (!auth) {
-        return next(handleError(400, '密碼錯誤', next))
+        return next(handleError(407, '密碼錯誤', next))
     }
     generateSendJWT(user, 200, res)
 })
