@@ -101,9 +101,8 @@ const updatePassword = handleErrorAsync(async (req, res, next) => {
 
     // 確認密碼欄位是否足8碼
     checkPasswordLength(password, next)
-
     newPassword = await createPasswordHash(password)
-    await User.findByIdAndUpdate(req.user.id, {
+    await User.findByIdAndUpdate(req.user._id, {
         password: newPassword,
     })
         .then((user) => {
@@ -116,17 +115,73 @@ const updatePassword = handleErrorAsync(async (req, res, next) => {
 
 // 取得個人資料
 const getUserProfile = handleErrorAsync(async (req, res, next) => {
-    const user = req.user
+    const id = req.user._id
+    let user = {}
+    User.findById(id)
+        .populate({
+            path: 'followers.user',
+            select: 'name avatar',
+        })
+        .populate({
+            path: 'following.user',
+            select: 'name avatar',
+        })
+        .populate({
+            path: 'likes.posts',
+            select: 'name avatar',
+        })
+        .then((data) => {
+            user = { ...data._doc, id }
+            res.status(200).json({
+                status: 'success',
+                data: {
+                    user: {
+                        _id: user._id,
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        createdAt: user.createdAt,
+                        avatar: user.avatar,
+                        gender: user.gender,
+                        followers: user.followers,
+                        following: user.following,
+                        likes: user.likes,
+                    },
+                },
+            })
+        })
+})
+
+// 取得其他用戶資料
+const getUserProfileById = handleErrorAsync(async (req, res, next) => {
+    const userId = req.params.id
+    const user = await User.findById(userId)
+        .populate({
+            path: 'followers.user',
+            select: 'name avatar',
+        })
+        .populate({
+            path: 'following.user',
+            select: 'name avatar',
+        })
+        .populate({
+            path: 'likes.posts',
+            select: 'user',
+        })
     res.status(200).json({
         status: 'success',
         data: {
             user: {
+                _id: user._id,
                 id: user._id,
                 name: user.name,
                 email: user.email,
                 createdAt: user.createdAt,
                 avatar: user.avatar,
                 gender: user.gender,
+                followers: user.followers,
+                following: user.following,
+                likes: user.likes,
             },
         },
     })
@@ -174,7 +229,7 @@ const follow = handleErrorAsync(async (req, res, next) => {
     }
 
     // 避免出現重複值，所以使用updateOne
-    await User.updateOne(
+    const updateUserResult = await User.updateOne(
         {
             _id: userId,
             'following.user': { $ne: followerId },
@@ -183,15 +238,22 @@ const follow = handleErrorAsync(async (req, res, next) => {
             $addToSet: { following: { user: followerId } },
         }
     )
-    await User.updateOne(
+    const updateFollowerResult = await User.updateOne(
         {
             _id: followerId,
             'follower.user': { $ne: userId },
         },
         {
-            $addToSet: { follower: { user: userId } },
+            $addToSet: { followers: { user: userId } },
         }
     )
+    // 檢查更新結果
+    if (
+        updateUserResult.nModified === 0 ||
+        updateFollowerResult.nModified === 0
+    ) {
+        return next(handleError(500, '更新追蹤狀態時出現錯誤', next))
+    }
 
     res.status(200).json({
         status: 'success',
@@ -216,7 +278,7 @@ const unFollow = handleErrorAsync(async (req, res, next) => {
         $pull: { following: { user: followerId } },
     })
     await User.findByIdAndUpdate(followerId, {
-        $pull: { follower: { user: userId } },
+        $pull: { followers: { user: userId } },
     })
 
     res.status(200).json({
@@ -230,6 +292,7 @@ module.exports = {
     signIn,
     updatePassword,
     getUserProfile,
+    getUserProfileById,
     updateProfile,
     follow,
     unFollow,

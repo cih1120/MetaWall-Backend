@@ -8,7 +8,6 @@ const PostSchema = new mongoose.Schema(
         },
         tags: {
             type: [String],
-            required: [true, '貼文標籤未填寫'],
             enum: ['遊記', '發問', '閒聊', '美食'],
         },
         content: {
@@ -28,7 +27,7 @@ const PostSchema = new mongoose.Schema(
                 },
                 createdAt: {
                     type: Date,
-                    default: Date.now(),
+                    default: Date.now,
                 },
             },
         ],

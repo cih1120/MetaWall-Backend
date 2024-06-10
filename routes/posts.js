@@ -5,6 +5,7 @@ const uploadImage = require('../middlewares/uploadImage')
 const { uploadPostPhoto } = require('../controller/upload.controller')
 const {
     getPost,
+    getPostById,
     getUserPost,
     newPost,
     editPost,
@@ -13,10 +14,14 @@ const {
     like,
     unLike,
     comment,
+    removeComment,
 } = require('../controller/post.controller')
 
 // 取得所有貼文
-router.get('/', getPost)
+router.get('/', isAuth, getPost)
+
+// 取得所有貼文
+router.get('/:id', isAuth, getPostById)
 
 // 取得特定用戶貼文
 router.get('/user/:id', getUserPost)
@@ -44,5 +49,8 @@ router.delete('/:id/un_like', isAuth, unLike)
 
 // 對一則貼文進行留言
 router.post('/:id/comment', isAuth, express.json(), comment)
+
+// 刪除一則貼文留言
+router.delete('/:id/comment', isAuth, removeComment)
 
 module.exports = router

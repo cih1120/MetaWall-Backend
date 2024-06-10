@@ -8,9 +8,6 @@ const checkPost = (data, next) => {
     if (!data.title.trim()) {
         return handleError(400, '貼文標題未填寫', next)
     }
-    if (data.tags.length === 0) {
-        return handleError(400, '貼文標籤未填寫', next)
-    }
     if (!data.content.trim()) {
         return handleError(400, '貼文內容未填寫', next)
     }
@@ -28,7 +25,7 @@ const getPost = async (req, res, next) => {
         })
         .populate({
             path: 'comments',
-            select: 'comment user createdAt',
+            select: 'comment user createdAt avatar',
         })
         .sort(timeSort)
     res.status(200).json({
@@ -37,13 +34,41 @@ const getPost = async (req, res, next) => {
     })
 }
 
-// 取得所有貼文
-const getUserPost = async (req, res, next) => {
-    const userId = req.params.id
-    const posts = await Post.find({ user: userId }).populate({
-        path: 'comments',
-        select: 'comment user createdAt',
+// 取得特定貼文
+const getPostById = async (req, res, next) => {
+    const postId = req.params.id
+    const post = await Post.findById(postId)
+        .populate({
+            path: 'user',
+            select: 'name avatar ',
+        })
+        .populate({
+            path: 'comments',
+            select: 'comment user createdAt',
+        })
+    res.status(200).json({
+        status: 'success',
+        data: post,
     })
+}
+
+// 取得該用戶所有貼文
+const getUserPost = async (req, res, next) => {
+    const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createdAt'
+    const q =
+        req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {}
+    const userId = req.params.id
+    const searchParams = { ...q, user: userId }
+    const posts = await Post.find(searchParams)
+        .populate({
+            path: 'user',
+            select: 'name avatar ',
+        })
+        .populate({
+            path: 'comments',
+            select: 'comment user createdAt',
+        })
+        .sort(timeSort)
     res.status(200).json({
         status: 'success',
         data: posts,
@@ -150,9 +175,11 @@ const like = handleErrorAsync(async (req, res, next) => {
             $addToSet: { likes: { post: postId } },
         }
     )
+    // const res = await Post.findById(postId)
 
     res.status(200).json({
         status: 'success',
+        data: post,
         message: '按讚成功',
     })
 })
@@ -187,25 +214,61 @@ const comment = handleErrorAsync(async (req, res, next) => {
     if (!comment.trim()) {
         return next(handleError(400, '留言尚未填寫', next))
     }
-    const post = await Post.findById(postId)
-    if (!post) {
-        return next(handleError(400, 'post id 錯誤', next))
-    }
 
-    const newComment = await Comment.create({
+    await Comment.create({
         comment,
         user: userId,
         post: postId,
     })
 
+    const post = await Post.findById(postId)
+        .populate({
+            path: 'user',
+            select: 'name avatar ',
+        })
+        .populate({
+            path: 'comments',
+            select: 'comment user createdAt avatar',
+        })
+    if (!post) {
+        return next(handleError(400, 'post id 錯誤', next))
+    }
+
     res.status(200).json({
         status: 'success',
-        data: newComment,
+        data: post,
+    })
+})
+
+// 刪除一則貼文的留言
+const removeComment = handleErrorAsync(async (req, res, next) => {
+    const commentId = req.params.id // 假設 commentId 從路徑參數中獲取
+
+    const comment = await Comment.findById(commentId)
+    await Comment.findByIdAndDelete(commentId)
+    console.log(comment)
+    const post = await Post.findById(comment.post)
+        .populate({
+            path: 'user',
+            select: 'name avatar ',
+        })
+        .populate({
+            path: 'comments',
+            select: 'comment user createdAt avatar',
+        })
+    if (!post) {
+        return next(handleError(400, 'post id 錯誤', next))
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: post,
     })
 })
 
 module.exports = {
     getPost,
+    getPostById,
     getUserPost,
     newPost,
     editPost,
@@ -214,4 +277,5 @@ module.exports = {
     like,
     unLike,
     comment,
+    removeComment,
 }

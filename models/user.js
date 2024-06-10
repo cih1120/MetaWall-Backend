@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Post = require('../models/post')
 const { Schema } = mongoose
 const UserSchema = new mongoose.Schema(
     {
@@ -27,7 +28,7 @@ const UserSchema = new mongoose.Schema(
             {
                 user: {
                     type: mongoose.Schema.ObjectId,
-                    ref: 'User',
+                    ref: 'user',
                 },
                 createdAt: {
                     type: Date,
@@ -39,7 +40,7 @@ const UserSchema = new mongoose.Schema(
             {
                 user: {
                     type: mongoose.Schema.ObjectId,
-                    ref: 'User',
+                    ref: 'user',
                 },
                 createdAt: {
                     type: Date,
@@ -68,6 +69,8 @@ const UserSchema = new mongoose.Schema(
     {
         versionKey: false,
         timestamps: false,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
     }
 )
 

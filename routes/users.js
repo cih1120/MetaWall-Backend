@@ -11,6 +11,7 @@ const {
     signIn,
     updatePassword,
     getUserProfile,
+    getUserProfileById,
     updateProfile,
     follow,
     unFollow,
@@ -23,10 +24,13 @@ router.post('/sign_up', express.json(), signUp)
 router.post('/sign_in', express.json(), signIn)
 
 // 更新密碼
-router.post('/update_password', express.json(), updatePassword)
+router.post('/update_password', isAuth, express.json(), updatePassword)
 
 // 取得個人資料
 router.get('/profile', isAuth, getUserProfile)
+
+// 取得其他用戶資料
+router.get('/profile/:id', isAuth, getUserProfileById)
 
 // 更新個人資料
 router.patch('/profile', isAuth, express.json(), updateProfile)
