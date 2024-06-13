@@ -41,6 +41,7 @@ app.use(function (err, req, res, next) {
     // production
     if (err.name === 'ValidationError') {
         err.message = '資料欄位未填寫正確，請重新輸入！'
+        err.statusCode = 400
         err.isOperational = true
         return resErrorProd(err, res)
     }
