@@ -206,9 +206,13 @@ const updateProfile = handleErrorAsync(async (req, res, next) => {
         updateFields.avatar = avatar
     }
 
-    await User.findByIdAndUpdate(req.user.id, {
-        ...updateFields,
-    })
+    await User.findByIdAndUpdate(
+        req.user.id,
+        {
+            ...updateFields,
+        },
+        { new: true }
+    )
         .then((user) => generateSendJWT(user, 200, res))
         .catch((err) => {
             return next(handleError(400, '找不到使用者', next))
