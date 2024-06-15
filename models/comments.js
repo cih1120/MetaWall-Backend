@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const transformId = require('../service/transformId')
 
 const commentSchema = new mongoose.Schema(
     {
@@ -24,6 +25,14 @@ const commentSchema = new mongoose.Schema(
     {
         versionKey: false,
         timestamps: false,
+        toJSON: {
+            virtuals: true,
+            transform: transformId,
+        },
+        toObject: {
+            virtuals: true,
+            transform: transformId,
+        },
     }
 )
 

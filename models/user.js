@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const Post = require('../models/post')
+const transformId = require('../service/transformId')
+
 const { Schema } = mongoose
+
 const UserSchema = new mongoose.Schema(
     {
         name: {
@@ -69,8 +72,14 @@ const UserSchema = new mongoose.Schema(
     {
         versionKey: false,
         timestamps: false,
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true },
+        toJSON: {
+            virtuals: true,
+            transform: transformId,
+        },
+        toObject: {
+            virtuals: true,
+            transform: transformId,
+        },
     }
 )
 

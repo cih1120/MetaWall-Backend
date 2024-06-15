@@ -38,14 +38,12 @@ const generateSendJWT = (user, statusCode, res) => {
         expiresIn: process.env.JWT_EXPIRES_DAY,
     })
     user.password = undefined
+    user.token = token
     res.status(statusCode).json({
         status: 'success',
         data: {
-            user: {
-                token,
-                id: user._id,
-                ...user._doc,
-            },
+            user,
+            token,
         },
     })
 }

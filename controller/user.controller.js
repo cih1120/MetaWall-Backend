@@ -136,8 +136,7 @@ const getUserProfile = handleErrorAsync(async (req, res, next) => {
                 status: 'success',
                 data: {
                     user: {
-                        _id: user._id,
-                        id: user._id,
+                        id: user.id,
                         name: user.name,
                         email: user.email,
                         createdAt: user.createdAt,
@@ -172,8 +171,7 @@ const getUserProfileById = handleErrorAsync(async (req, res, next) => {
         status: 'success',
         data: {
             user: {
-                _id: user._id,
-                id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 createdAt: user.createdAt,

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const transformId = require('../service/transformId')
 
 const PostSchema = new mongoose.Schema(
     {
@@ -42,8 +43,14 @@ const PostSchema = new mongoose.Schema(
     {
         versionKey: false,
         timestamps: false,
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true },
+        toJSON: {
+            virtuals: true,
+            transform: transformId,
+        },
+        toObject: {
+            virtuals: true,
+            transform: transformId,
+        },
     }
 )
 
