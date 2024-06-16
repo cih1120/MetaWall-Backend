@@ -15,9 +15,13 @@ const checkPost = (data, next) => {
 
 // 取得所有貼文
 const getPost = async (req, res, next) => {
-    const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createdAt'
+    const timeSort =
+        req.query.timeSort === 'asc' ? { createdAt: 1 } : { createdAt: -1 }
     const q =
         req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {}
+    const page = parseInt(req.query.page, 10) || 1
+    const limit = parseInt(req.query.limit, 10) || 5
+    const skip = (page - 1) * limit
     const posts = await Post.find(q)
         .populate({
             path: 'user',
@@ -28,6 +32,8 @@ const getPost = async (req, res, next) => {
             select: 'comment user createdAt avatar',
         })
         .sort(timeSort)
+        .skip(skip)
+        .limit(limit)
     res.status(200).json({
         status: 'success',
         data: posts,
@@ -57,6 +63,9 @@ const getUserPost = async (req, res, next) => {
     const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createdAt'
     const q =
         req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {}
+    const page = parseInt(req.query.page, 10) || 1
+    const limit = parseInt(req.query.limit, 10) || 5
+    const skip = (page - 1) * limit
     const userId = req.params.id
     const searchParams = { ...q, user: userId }
     const posts = await Post.find(searchParams)
@@ -69,6 +78,8 @@ const getUserPost = async (req, res, next) => {
             select: 'comment user createdAt',
         })
         .sort(timeSort)
+        .skip(skip)
+        .limit(limit)
     res.status(200).json({
         status: 'success',
         data: posts,
