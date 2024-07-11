@@ -26,8 +26,8 @@ MetaWall是一個社交媒體平台，提供用戶發佈動態、評論和點讚
 ### 1. Clone
 
 ```bash
-git clone https://github.com/your-repo/metawall-backend.git
-cd metawall-backend
+git clone https://github.com/cih1120/MetaWall-Backend.git
+cd MetaWall-Backend
 ```
 
 ### 2. 安裝依賴 
