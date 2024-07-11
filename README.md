@@ -1,5 +1,7 @@
 # MetaWall Backend
 
+<img width="700" alt="MetaWall" src="https://github.com/cih1120/MetaWall-Backend/assets/44454902/1bb20224-8be5-47ac-a10e-da7fd9cc1470">
+
 這是MetaWall專案的後端部分，該專案為參加六角學院2024春季Node.js直播班完成的專案。
 
 此專案使用Node.js、Express和Mongoose構建。
@@ -47,14 +49,7 @@ npm run start:production
 ``` 
 
 ## 使用方法
-此專案提供RESTful API，以下是主要EndPoint：
-（更多EndPoint請參考[Node.js_Final_local.postman_collection.json](https://github.com/cih1120/HexSchool_2024node_nodeExpress/blob/master/Node.js_Final_local.postman_collection.json)文件）
-* `POST /api/users/register` - 用戶註冊
-* `POST /api/users/login` - 用戶登入
-* `POST /api/posts` - 發佈動態
-* `GET /api/posts` - 獲取所有動態
-* `POST /api/posts/:id/comments` - 發佈評論
-* `POST /api/posts/:id/like` - 點讚
+此專案提供RESTful API，請參考[Node.js_Final_local.postman_collection.json](https://github.com/cih1120/HexSchool_2024node_nodeExpress/blob/master/Node.js_Final_local.postman_collection.json)文件）
 
 ### JWT 驗證
 本專案使用JWT（JSON Web Token）進行用戶驗證。JWT有效期限設置為7天。用戶在註冊或登入成功後，會收到一個JWT，該JWT需要在每次API請求中通過HTTP標頭Authorization攜帶。
